@@ -1,22 +1,31 @@
 import os
 import time
 
-print 
+def load_env(names):
+    env_dict = { "unset": [] }
+    for nm in names:
+        env = os.environ.get(nm)
+        
+        if env == None:
+            env_dict['unset'].append(nm)
+            continue
 
-env = [os.environ.get('DATA_PATH'), os.environ.get('WAIT_TIME'), os.environ.get("WRITE_TIMES")]
+        env_dict[nm] = env
+    return env_dict
+
+env = load_env(["DATA_PATH", "WAIT_TIME", "WRITE_TIMES"])
 
 it = 0
 
-for e in env:
-    if e == None:
-        print ("Exit due to env variables being unset.")
-        exit(0)
+if len(env["unset"]) > 0:
+    print ("Exit due to env variables being unset.")
+    exit(0)
 
 while (True):
 
-    data_path = env[0]
-    wait_time = float(env[1])
-    write_times = int(env[2])
+    data_path = env["DATA_PATH"]
+    wait_time = float(env["WAIT_TIME"])
+    write_times = int(env["WRITE_TIMES"])
 
     with open(data_path, "a") as f:
         write_str = str(it) + "\n"
