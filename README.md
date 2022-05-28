@@ -14,5 +14,5 @@ You can build by simply entering into the subfolders reader and writer and runni
 
 **Running reader**
 
-Non-detached.
-```sudo docker run -it -v demo:/data -e DATA_PATH="data/log.txt" -e WAIT_TIME=5 reader```
+Non-detached (preferable)
+```sudo docker run -it -v demo:/data -e WRITER_ENDPOINT="http://192.168.1.135:49157" reader```

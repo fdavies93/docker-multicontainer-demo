@@ -1,5 +1,6 @@
 import os
 import time
+import requests
 
 # refit to automatically send API request to "writer" triggering a write
 # then grab the last line of log.csv (CSV) after wait
@@ -17,15 +18,19 @@ def load_env(names):
         env_dict[nm] = env
     return env_dict
 
-env = load_env(["DATA_PATH", "WAIT_TIME"])
+env = load_env(["DATA_PATH", "WAIT_TIME", "CHECKUP_FREQ", "WRITER_ENDPOINT"])
 
 if len(env["unset"]) > 0:
     print ("Exit due to env variables being unset.")
     exit(0)
 
+it = 0
+
 while (True):
     data_path = env["DATA_PATH"]
     wait_time = float(env["WAIT_TIME"])
+    checkup_freq = int(env["CHECKUP_FREQ"])
+    writer_endpoint = env["WRITER_ENDPOINT"]
     print("Last line: ", end="")
 
     with open(data_path, "rb") as f:
@@ -37,6 +42,11 @@ while (True):
         except OSError:
             f.seek(0)
         last_line = f.readline().decode()
+        
+        it = (it + 1) % checkup_freq
+
+        if it == 0:
+            requests.post(writer_endpoint,json={"source": "reader", "text": "checkup"})
 
     print(last_line, end="")
     time.sleep(wait_time)
