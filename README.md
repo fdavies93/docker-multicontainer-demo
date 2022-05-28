@@ -10,9 +10,9 @@ You can build by simply entering into the subfolders reader and writer and runni
 ```sudo docker volume create demo```
 
 **Running writer**
-```sudo docker run -dit -e DATA_PATH="data/log.txt" -e WAIT_TIME=10 -e WRITE_TIMES=1000 writer```
-
-```sudo docker run -dit -v demo:/data -e DATA_PATH="data/log.txt" -e WAIT_TIME=10 -e WRITE_TIMES=1000 writer```
+```sudo docker run -ditP -v demo:/data -e DATA_PATH="data/log.txt" ```
 
 **Running reader**
-```sudo docker run -dit -v demo:/data -e DATA_PATH="data/log.txt" -e WAIT_TIME=5 reader```
+
+Non-detached.
+```sudo docker run -it -v demo:/data -e DATA_PATH="data/log.txt" -e WAIT_TIME=5 reader```

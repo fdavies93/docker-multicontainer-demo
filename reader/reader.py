@@ -1,6 +1,10 @@
 import os
 import time
 
+# refit to automatically send API request to "writer" triggering a write
+# then grab the last line of log.csv (CSV) after wait
+# writer should store API requests as a JSON string with timestamp and source (?)
+
 def load_env(names):
     env_dict = { "unset": [] }
     for nm in names:
@@ -22,6 +26,7 @@ if len(env["unset"]) > 0:
 while (True):
     data_path = env["DATA_PATH"]
     wait_time = float(env["WAIT_TIME"])
+    print("Last line: ", end="")
 
     with open(data_path, "rb") as f:
         # get last line of file
