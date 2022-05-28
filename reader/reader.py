@@ -20,17 +20,22 @@ def load_env(names):
 
 env = load_env(["DATA_PATH", "WAIT_TIME", "CHECKUP_FREQ", "WRITER_ENDPOINT"])
 
+data_path = env["DATA_PATH"]
+wait_time = float(env["WAIT_TIME"])
+checkup_freq = int(env["CHECKUP_FREQ"])
+writer_endpoint = env["WRITER_ENDPOINT"]
+
 if len(env["unset"]) > 0:
     print ("Exit due to env variables being unset.")
     exit(0)
 
 it = 0
 
+with open(data_path, "a+") as f:
+    #create file if it doesn't exist
+    pass
+
 while (True):
-    data_path = env["DATA_PATH"]
-    wait_time = float(env["WAIT_TIME"])
-    checkup_freq = int(env["CHECKUP_FREQ"])
-    writer_endpoint = env["WRITER_ENDPOINT"]
     print("Last line: ", end="")
 
     with open(data_path, "rb") as f:

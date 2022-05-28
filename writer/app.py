@@ -25,6 +25,12 @@ if len(env["unset"]) > 0:
     print ("Exit due to env variables being unset.")
     exit(0)
 
+@app.before_first_request
+def setup():
+    with open(env["DATA_PATH"], "a+") as f:
+        # create file if it doesn't exist
+        pass
+
 @app.route("/", methods=["POST"])
 def append_request():
     obj = request.json
