@@ -1,0 +1,14 @@
+version: "0.1"
+services:
+  writer:
+    build: ./writer
+    ports: 
+      - "5000:5000"
+    volumes:
+      - demo:./data/ 
+  reader:
+    build: ./reader
+    volumes:
+      - demo:./data/
+volumes:
+  demo: {}
