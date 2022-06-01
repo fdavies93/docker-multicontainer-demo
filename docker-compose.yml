@@ -1,14 +1,21 @@
 version: "0.1"
 services:
-  writer:
-    build: ./writer
+  demo-writer:
+    hostname: writer
+    build: ./writer 
     ports: 
       - "5000:5000"
     volumes:
-      - demo:./data/ 
-  reader:
+      - demo:/data 
+    environment:
+      - DATA_PATH=/data/log.txt
+  demo-reader:
+    hostname: reader
     build: ./reader
     volumes:
-      - demo:./data/
+      - demo:/data
+    environment:
+      - DATA_PATH=/data/log.txt
+      - WRITER_ENDPOINT=http://writer:5000/
 volumes:
   demo: {}
